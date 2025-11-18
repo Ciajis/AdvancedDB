@@ -5,7 +5,7 @@ import sqlite3
 import hashlib
 import xml.etree.ElementTree as ET
 
-DB_NAME = "database.db"
+DB_NAME = "week6_oct2025.db"
 XML_FILE_NAME = "week6_oct2025.xml"
 
 # Create a window
@@ -27,19 +27,20 @@ def read_XML():
     print("Root: ", root.tag)
 
     # Read data from XML file
-    for elem in root.iter():
-        print(elem.tag," : ",elem.text)
+    for user in root.findall("login_details"):
+        print("Username: ", user.get("username"))
+        print("Password: ", user.get("password"))
 
-    messagebox.showinfo("XML Read", "XML content printet to console")
+    messagebox.showinfo("XML Read", "XML content printed to console")
 
 
 def write_XML():
     """ Write login details from the database to the XML file."""
     # 1. read data
-    connection = sqlite3.connect("DB_NAME")
+    connection = sqlite3.connect(DB_NAME)
     cursor = connection.cursor()
     # Retrieve data from database using SQL query
-    cursor.execute('SELECT * FROM login_details;')
+    cursor.execute('''SELECT * FROM login_details;''')
     login_data = cursor.fetchall()
     connection.close()
 
@@ -54,7 +55,7 @@ def write_XML():
     messagebox.showinfo("XML Write", "XML content has been written to the file.")
 
 write_XML()
-
+read_XML()
 
 
 # Loop to show window
