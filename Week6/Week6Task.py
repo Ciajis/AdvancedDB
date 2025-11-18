@@ -57,6 +57,8 @@ def write_XML():
 write_XML()
 read_XML()
 
+read_button = Button(window, text="Read XML", command=read_XML).grid(row=0,column=0)
+
 
 # Loop to show window
 window.mainloop()
